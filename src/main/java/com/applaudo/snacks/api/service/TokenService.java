@@ -6,7 +6,9 @@ import com.applaudo.snacks.api.domain.Token;
 public interface TokenService {
 	public Token createNewToken(Account account);
 
-	public Account getAccountFromToken(Token token);
+	public Token fromString(String tokenStr);
 
 	public void destroyToken(Token token);
+
+	public void destroyToken(String tokenStr);
 }

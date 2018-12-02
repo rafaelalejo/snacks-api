@@ -2,6 +2,7 @@ package com.applaudo.snacks.api.domain;
 
 import java.util.UUID;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -14,12 +15,17 @@ import javax.persistence.Table;
 public class Token {
 
 	@Id
+	@Column(name = "id")
 	private UUID id;
 
 	// Fetch on object instanciation
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "userid", referencedColumnName = "id")
 	private Account account;
+
+	public Token() {
+
+	}
 
 	public Token(Account account) {
 		this.id = genUUID();
