@@ -55,18 +55,9 @@ public class ProductController {
 	}
 
 	@PostMapping("/products")
-	public Product newProduct(@RequestHeader(name = "token") String tokenStr, @RequestParam String name,
-			@RequestParam BigDecimal price, @RequestParam Integer stock) {
+	public Product newProduct(@RequestHeader(name = "token") String tokenStr, @RequestBody Product product) {
 
 		Token token = tokenService.fromString(tokenStr);
-
-		Product product = new Product();
-
-		product.setName(name);
-		product.setPrice(price);
-		product.setStock(stock);
-
 		return productService.addProduct(token, product);
 	}
-
 }

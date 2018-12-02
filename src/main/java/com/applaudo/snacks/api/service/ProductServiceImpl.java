@@ -28,6 +28,17 @@ public class ProductServiceImpl implements ProductService {
 	@Transactional
 	@Override
 	public Product addProduct(Token token, Product product) {
+		if (!token.getAccount().isAdminRole()) {
+			throw new AccessDeniedException();
+		}
+
+		// just in case, avoids duplicated keys and non-contiguous ids
+		// null id means that the id generation is handled by the JPA SequenceGenerator
+		product.setId(null);
+
+		// override for safety
+		product.setLikes(0);
+
 		entityManager.persist(product);
 		return product;
 	}
