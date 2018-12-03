@@ -21,4 +21,6 @@ public interface ProductService {
 	public Product findByName(String name);
 
 	public List<Product> getAllProducts();
+
+	public void likeProduct(Token token, Integer id);
 }

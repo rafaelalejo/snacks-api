@@ -3,6 +3,8 @@ package com.applaudo.snacks.api.controller;
 import java.math.BigDecimal;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import com.applaudo.snacks.api.domain.Product;
 import com.applaudo.snacks.api.domain.Token;
 import com.applaudo.snacks.api.service.ProductService;
@@ -39,25 +41,41 @@ public class ProductController {
 		return productService.findById(id);
 	}
 
-	@PutMapping("/products/{id}")
-	public Product updateProduct(@RequestHeader(name = "token") String tokenStr, @PathVariable Integer id,
-			@RequestParam(name = "price", required = false) BigDecimal price,
-			@RequestParam(name = "stock", required = false) Integer stock) {
+	@PutMapping("/products/{id}/price")
+	public Product updateProductPrice(@RequestHeader(name = "token") String tokenStr, @PathVariable Integer id,
+			@RequestParam(name = "price") BigDecimal price) {
 
 		Token token = tokenService.fromString(tokenStr);
 
-		// both can be updated in the same PUT query
-		productService.updateProductPrice(token, id, price);
-		productService.updateProductStock(token, id, stock);
+		return productService.updateProductPrice(token, id, price);
+	}
 
-		// in any case, return the updated product
-		return productService.findById(id);
+	@PutMapping("/products/{id}/stock")
+	public Product updateProductStock(@RequestHeader(name = "token") String tokenStr, @PathVariable Integer id,
+			@RequestParam(name = "stock") Integer stock) {
+
+		Token token = tokenService.fromString(tokenStr);
+
+		return productService.updateProductStock(token, id, stock);
 	}
 
 	@PostMapping("/products")
-	public Product newProduct(@RequestHeader(name = "token") String tokenStr, @RequestBody Product product) {
+	public Product newProduct(@RequestHeader(name = "token") String tokenStr, @Valid @RequestBody Product product) {
 
 		Token token = tokenService.fromString(tokenStr);
 		return productService.addProduct(token, product);
+	}
+
+	// Client related tasks
+
+	@PostMapping("/products/{id}/like")
+
+	public Product likeProduct(@RequestHeader(name = "token") String tokenStr, @PathVariable Integer id) {
+
+		Token token = tokenService.fromString(tokenStr);
+		productService.likeProduct(token, id);
+
+		// product with updated likes counter
+		return productService.findById(id);
 	}
 }

@@ -7,10 +7,12 @@ import java.util.Optional;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
+import com.applaudo.snacks.api.domain.Like;
 import com.applaudo.snacks.api.domain.Product;
 import com.applaudo.snacks.api.domain.Token;
 import com.applaudo.snacks.api.exception.AccessDeniedException;
 import com.applaudo.snacks.api.exception.InvalidProductException;
+import com.applaudo.snacks.api.repository.LikeRepository;
 import com.applaudo.snacks.api.repository.ProductRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ProductServiceImpl implements ProductService {
+
+	@Autowired
+	private LikeRepository likeRepository;
 
 	@Autowired
 	private ProductRepository productRepository;
@@ -78,10 +83,6 @@ public class ProductServiceImpl implements ProductService {
 			throw new AccessDeniedException();
 		}
 
-		if (price == null) {
-			return null;
-		}
-
 		Product p = findById(id);
 
 		p.setPrice(price);
@@ -98,10 +99,6 @@ public class ProductServiceImpl implements ProductService {
 			throw new AccessDeniedException();
 		}
 
-		if (stock == null) {
-			return null;
-		}
-
 		Product p = findById(id);
 
 		p.setStock(stock);
@@ -114,6 +111,32 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public List<Product> getAllProducts() {
 		return productRepository.findAll();
+	}
+
+	@Transactional
+	@Override
+	public void likeProduct(Token token, Integer id) {
+
+		// admins can't increment the like counter of a product
+		if (token.getAccount().isAdminRole()) {
+			throw new AccessDeniedException();
+		}
+
+		Product p = findById(id);
+		// a user account can only make one like per product
+		Like l = likeRepository.findByAccountAndProduct(token.getAccount(), p);
+
+		if (l == null) {
+			l = new Like();
+
+			l.setAccount(token.getAccount());
+			l.setProduct(p);
+
+			entityManager.persist(l);
+
+			p.setLikes(p.getLikes() + 1);
+			entityManager.persist(p);
+		}
 	}
 
 }
