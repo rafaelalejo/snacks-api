@@ -18,9 +18,11 @@ public interface ProductService {
 
 	public Product findById(Integer id);
 
-	public Product findByName(String name);
+	public List<Product> findByName(String name);
 
 	public List<Product> getAllProducts();
 
 	public void likeProduct(Token token, Integer id);
+
+	public Product purchaseProduct(Token token, Integer id, Integer quantity);
 }

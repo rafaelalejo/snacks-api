@@ -9,7 +9,8 @@ import javax.transaction.Transactional;
 
 import com.applaudo.snacks.api.domain.Account;
 import com.applaudo.snacks.api.domain.Token;
-import com.applaudo.snacks.api.exception.InvalidTokenException;
+import com.applaudo.snacks.api.exception.BusinessLogicException;
+import com.applaudo.snacks.api.exception.BusinessLogicException.ErrorCode;
 import com.applaudo.snacks.api.repository.TokenRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,7 +66,7 @@ public class TokenServiceImpl implements TokenService {
 		try {
 			uuidFrom = UUID.fromString(tokenStr);
 		} catch (Exception e) {
-			throw new InvalidTokenException();
+			throw new BusinessLogicException(ErrorCode.INVALID_TOKEN);
 		}
 
 		if (tempDB.containsKey(tokenStr)) {
@@ -78,7 +79,7 @@ public class TokenServiceImpl implements TokenService {
 		Optional<Token> t = tokenRepository.findById(uuidFrom);
 
 		if (!t.isPresent()) {
-			throw new InvalidTokenException();
+			throw new BusinessLogicException(ErrorCode.INVALID_TOKEN);
 		}
 
 		// Cache entry

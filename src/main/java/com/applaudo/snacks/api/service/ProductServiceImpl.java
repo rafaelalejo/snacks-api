@@ -1,6 +1,7 @@
 package com.applaudo.snacks.api.service;
 
 import java.math.BigDecimal;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
 
@@ -9,9 +10,10 @@ import javax.transaction.Transactional;
 
 import com.applaudo.snacks.api.domain.Like;
 import com.applaudo.snacks.api.domain.Product;
+import com.applaudo.snacks.api.domain.Purchase;
 import com.applaudo.snacks.api.domain.Token;
-import com.applaudo.snacks.api.exception.AccessDeniedException;
-import com.applaudo.snacks.api.exception.InvalidProductException;
+import com.applaudo.snacks.api.exception.BusinessLogicException;
+import com.applaudo.snacks.api.exception.BusinessLogicException.ErrorCode;
 import com.applaudo.snacks.api.repository.LikeRepository;
 import com.applaudo.snacks.api.repository.ProductRepository;
 
@@ -34,7 +36,7 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public Product addProduct(Token token, Product product) {
 		if (!token.getAccount().isAdminRole()) {
-			throw new AccessDeniedException();
+			throw new BusinessLogicException(ErrorCode.ADMIN_ACCESS_DENIED);
 		}
 
 		// just in case, avoids duplicated keys and non-contiguous ids
@@ -53,22 +55,22 @@ public class ProductServiceImpl implements ProductService {
 		Optional<Product> p = productRepository.findById(id);
 
 		if (!p.isPresent()) {
-			throw new InvalidProductException();
+			throw new BusinessLogicException(ErrorCode.INVALID_PRODUCT);
 		}
 
 		return p.get();
 	}
 
 	@Override
-	public Product findByName(String name) {
-		return null;
+	public List<Product> findByName(String name) {
+		return productRepository.findByNameContaining(name);
 	}
 
 	@Transactional
 	@Override
 	public void removeProduct(Token token, Integer id) {
 		if (!token.getAccount().isAdminRole()) {
-			throw new AccessDeniedException();
+			throw new BusinessLogicException(ErrorCode.ADMIN_ACCESS_DENIED);
 		}
 
 		Product p = findById(id);
@@ -80,7 +82,7 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public Product updateProductPrice(Token token, Integer id, BigDecimal price) {
 		if (!token.getAccount().isAdminRole()) {
-			throw new AccessDeniedException();
+			throw new BusinessLogicException(ErrorCode.ADMIN_ACCESS_DENIED);
 		}
 
 		Product p = findById(id);
@@ -96,7 +98,7 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public Product updateProductStock(Token token, Integer id, Integer stock) {
 		if (!token.getAccount().isAdminRole()) {
-			throw new AccessDeniedException();
+			throw new BusinessLogicException(ErrorCode.ADMIN_ACCESS_DENIED);
 		}
 
 		Product p = findById(id);
@@ -119,7 +121,7 @@ public class ProductServiceImpl implements ProductService {
 
 		// admins can't increment the like counter of a product
 		if (token.getAccount().isAdminRole()) {
-			throw new AccessDeniedException();
+			throw new BusinessLogicException(ErrorCode.USER_ACCESS_DENIED);
 		}
 
 		Product p = findById(id);
@@ -139,4 +141,33 @@ public class ProductServiceImpl implements ProductService {
 		}
 	}
 
+	@Transactional
+	@Override
+	public Product purchaseProduct(Token token, Integer id, Integer quantity) {
+		// admins can't buy products
+		if (token.getAccount().isAdminRole()) {
+			throw new BusinessLogicException(ErrorCode.USER_ACCESS_DENIED);
+		}
+
+		Product p = findById(id);
+
+		if (p.getStock() < quantity) {
+			throw new BusinessLogicException(ErrorCode.OUTOFSTOCK_PRODUCT);
+		}
+
+		Purchase purchase = new Purchase();
+		purchase.setAccount(token.getAccount());
+		purchase.setProduct(p);
+		purchase.setQuantity(quantity);
+
+		// now
+		purchase.setTimestamp(Calendar.getInstance());
+
+		p.setStock(p.getStock() - quantity);
+
+		entityManager.persist(p);
+		entityManager.persist(purchase);
+
+		return p;
+	}
 }

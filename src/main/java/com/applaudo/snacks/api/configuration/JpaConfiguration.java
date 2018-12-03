@@ -14,6 +14,7 @@ import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.validation.beanvalidation.MethodValidationPostProcessor;
 
 @Configuration
 @EnableTransactionManagement
@@ -26,6 +27,11 @@ public class JpaConfiguration {
 	public static String POSTGRES_ADDR = "jdbc:postgresql://192.168.70.130/" + POSTGRES_DBNAME;
 	public static String POSTGRES_USER = "applaudo";
 	public static String POSTGRES_PASS = "applaudo";
+
+	@Bean
+	public MethodValidationPostProcessor methodValidationPostProcessor() {
+		return new MethodValidationPostProcessor();
+	}
 
 	// Definicion de las entidades del proyecto
 	@Bean

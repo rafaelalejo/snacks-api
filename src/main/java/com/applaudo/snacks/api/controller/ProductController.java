@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import javax.validation.Valid;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Min;
 
 import com.applaudo.snacks.api.domain.Product;
 import com.applaudo.snacks.api.domain.Token;
@@ -29,9 +31,10 @@ public class ProductController {
 	@Autowired
 	private TokenService tokenService;
 
-	@GetMapping("/products")
+	// Product search
 
 	// TODO: pagination.
+	@GetMapping("/products")
 	public List<Product> getAllProducts() {
 		return productService.getAllProducts();
 	}
@@ -41,9 +44,16 @@ public class ProductController {
 		return productService.findById(id);
 	}
 
+	@GetMapping("/products/search")
+	public List<Product> getProductsFromSearch(@RequestParam(name = "name") String name) {
+		return productService.findByName(name);
+	}
+
+	// Product update, admin related task
+
 	@PutMapping("/products/{id}/price")
 	public Product updateProductPrice(@RequestHeader(name = "token") String tokenStr, @PathVariable Integer id,
-			@RequestParam(name = "price") BigDecimal price) {
+			@DecimalMin(value = "0.0", inclusive = false) @RequestParam(name = "price") BigDecimal price) {
 
 		Token token = tokenService.fromString(tokenStr);
 
@@ -52,7 +62,7 @@ public class ProductController {
 
 	@PutMapping("/products/{id}/stock")
 	public Product updateProductStock(@RequestHeader(name = "token") String tokenStr, @PathVariable Integer id,
-			@RequestParam(name = "stock") Integer stock) {
+			@Min(0) @RequestParam(name = "stock") Integer stock) {
 
 		Token token = tokenService.fromString(tokenStr);
 
@@ -77,5 +87,13 @@ public class ProductController {
 
 		// product with updated likes counter
 		return productService.findById(id);
+	}
+
+	@PostMapping("/products/{id}/purchase")
+	public Product purchaseProduct(@RequestHeader(name = "token") String tokenStr, @PathVariable Integer id,
+			@Min(1) @RequestParam(name = "quantity") Integer quantity) {
+		Token token = tokenService.fromString(tokenStr);
+
+		return productService.purchaseProduct(token, id, quantity);
 	}
 }
