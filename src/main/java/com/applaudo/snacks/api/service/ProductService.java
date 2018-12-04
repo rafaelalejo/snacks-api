@@ -3,11 +3,12 @@ package com.applaudo.snacks.api.service;
 import java.math.BigDecimal;
 import java.util.List;
 
+import com.applaudo.snacks.api.domain.PriceUpdate;
 import com.applaudo.snacks.api.domain.Product;
+import com.applaudo.snacks.api.domain.Purchase;
 import com.applaudo.snacks.api.domain.Token;
 
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 
 public interface ProductService {
@@ -33,4 +34,8 @@ public interface ProductService {
 	public void likeProduct(Token token, Integer id);
 
 	public Product purchaseProduct(Token token, Integer id, Integer quantity);
+
+	public List<Purchase> purchaseLogs(Token token);
+
+	public List<PriceUpdate> priceUpdateLogs(Token token);
 }

@@ -7,7 +7,9 @@ import javax.validation.Valid;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Min;
 
+import com.applaudo.snacks.api.domain.PriceUpdate;
 import com.applaudo.snacks.api.domain.Product;
+import com.applaudo.snacks.api.domain.Purchase;
 import com.applaudo.snacks.api.domain.Token;
 import com.applaudo.snacks.api.response.PaginatedProductsResponse;
 import com.applaudo.snacks.api.service.ProductService;
@@ -127,5 +129,20 @@ public class ProductController {
 		Token token = tokenService.fromString(tokenStr);
 
 		return productService.purchaseProduct(token, id, quantity);
+	}
+
+	// logs
+
+	@GetMapping("/products/purchase/logs")
+	public List<Purchase> gePurchaseLogs(@RequestHeader(name = "token") String tokenStr) {
+		Token token = tokenService.fromString(tokenStr);
+
+		return productService.purchaseLogs(token);
+	}
+
+	@GetMapping("/products/price/logs")
+	public List<PriceUpdate> getPriceUpdateLogs(@RequestHeader(name = "token") String tokenStr) {
+		Token token = tokenService.fromString(tokenStr);
+		return productService.priceUpdateLogs(token);
 	}
 }

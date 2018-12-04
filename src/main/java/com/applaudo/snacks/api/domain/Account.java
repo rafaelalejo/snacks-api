@@ -6,6 +6,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(schema = "public", name = "account")
 public class Account {
@@ -76,11 +78,10 @@ public class Account {
 		this.adminRole = adminRole;
 	}
 
-	// Spring Secutiry neccesary overrides
-
 	/**
 	 * @return the password
 	 */
+	@JsonIgnore
 	public String getPassword() {
 		return password;
 	}

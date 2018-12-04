@@ -9,13 +9,16 @@ import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
 import com.applaudo.snacks.api.domain.Like;
+import com.applaudo.snacks.api.domain.PriceUpdate;
 import com.applaudo.snacks.api.domain.Product;
 import com.applaudo.snacks.api.domain.Purchase;
 import com.applaudo.snacks.api.domain.Token;
 import com.applaudo.snacks.api.exception.BusinessLogicException;
 import com.applaudo.snacks.api.exception.BusinessLogicException.ErrorCode;
 import com.applaudo.snacks.api.repository.LikeRepository;
+import com.applaudo.snacks.api.repository.PriceUpdateRepository;
 import com.applaudo.snacks.api.repository.ProductRepository;
+import com.applaudo.snacks.api.repository.PurchaseRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -32,6 +35,12 @@ public class ProductServiceImpl implements ProductService {
 
 	@Autowired
 	private ProductRepository productRepository;
+
+	@Autowired
+	private PurchaseRepository purchaseRepository;
+
+	@Autowired
+	private PriceUpdateRepository priceUpdateRepository;
 
 	@Autowired
 	private EntityManager entityManager;
@@ -91,9 +100,19 @@ public class ProductServiceImpl implements ProductService {
 
 		Product p = findById(id);
 
+		// logging
+		PriceUpdate update = new PriceUpdate();
+
+		update.setAccount(token.getAccount());
+		update.setProduct(p);
+		update.setOldPrice(p.getPrice());
+		update.setNewPrice(price);
+		update.setTimestamp(Calendar.getInstance());
+
 		p.setPrice(price);
 
 		entityManager.persist(p);
+		entityManager.persist(update);
 
 		return p;
 	}
@@ -117,7 +136,7 @@ public class ProductServiceImpl implements ProductService {
 	// Products query
 	@Override
 	public List<Product> getAllProducts() {
-		return productRepository.findAll();
+		return productRepository.findAll(new Sort(Sort.Direction.DESC, "id"));
 	}
 
 	@Override
@@ -190,5 +209,28 @@ public class ProductServiceImpl implements ProductService {
 		entityManager.persist(purchase);
 
 		return p;
+	}
+
+	// Logs
+
+	@Override
+	public List<Purchase> purchaseLogs(Token token) {
+		// only admins can see the purchase log
+		if (!token.getAccount().isAdminRole()) {
+			throw new BusinessLogicException(ErrorCode.ADMIN_ACCESS_DENIED);
+		}
+
+		return purchaseRepository.findAll(new Sort(Sort.Direction.ASC, "timestamp"));
+	}
+
+	@Override
+	public List<PriceUpdate> priceUpdateLogs(Token token) {
+
+		// only admins can see the price update log
+		if (!token.getAccount().isAdminRole()) {
+			throw new BusinessLogicException(ErrorCode.ADMIN_ACCESS_DENIED);
+		}
+
+		return priceUpdateRepository.findAll(new Sort(Sort.Direction.ASC, "timestamp"));
 	}
 }
