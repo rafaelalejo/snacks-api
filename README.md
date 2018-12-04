@@ -256,6 +256,15 @@ http://www.mapacheproject.xyz:8080/products/{id}/price?price={price}
 http://www.mapacheproject.xyz:8080/products/1/price?price=1.2
 ```
 
+### Headers
+```
+POST /products HTTP/1.1
+Host: www.mapacheproject.xyz:8080
+token: 8153263d-cfa7-4e9d-bfd2-dfe17c5c786b
+Content-Type: application/json
+cache-control: no-cache
+```
+
 #### Response
 ```json
 {
@@ -281,7 +290,6 @@ Host: www.mapacheproject.xyz:8080
 token: 8153263d-cfa7-4e9d-bfd2-dfe17c5c786b
 Content-Type: application/json
 cache-control: no-cache
-Postman-Token: 507af381-7841-4b86-a974-cb75d7e84280
 ```
 
 ### Body
@@ -314,6 +322,14 @@ Only registered clients can like products.
 http://www.mapacheproject.xyz:8080/products/{id}/like
 ```
 
+### Headers
+```
+POST /products/1/like HTTP/1.1
+Host: www.mapacheproject.xyz:8080
+token: 3b7654c3-7c64-4c80-b9ed-ac9006089d50
+cache-control: no-cache
+```
+
 #### Response
 The updated product descriptor.
 
@@ -332,6 +348,14 @@ The updated product descriptor.
 #### Request (POST)
 ```
 http://www.mapacheproject.xyz:8080/products/{id}/purchase?quantity={quantity}
+```
+
+### Headers
+```
+POST /products/1/like HTTP/1.1
+Host: www.mapacheproject.xyz:8080
+token: 3b7654c3-7c64-4c80-b9ed-ac9006089d50
+cache-control: no-cache
 ```
 
 #### Reponse
