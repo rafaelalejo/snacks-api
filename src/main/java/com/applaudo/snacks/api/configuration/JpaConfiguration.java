@@ -5,6 +5,9 @@ import java.util.Properties;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
+import com.applaudo.snacks.api.demo.YAMLConfig;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -22,11 +25,14 @@ import org.springframework.validation.beanvalidation.MethodValidationPostProcess
 @EnableJpaRepositories(basePackages = "com.applaudo.snacks.api.repository")
 public class JpaConfiguration {
 
+	@Autowired
+	private YAMLConfig config;
+
 	// Constantes de la conexion a base de datos
-	public static String POSTGRES_DBNAME = "snacks_applaudo";
-	public static String POSTGRES_ADDR = "jdbc:postgresql://192.168.70.130/" + POSTGRES_DBNAME;
-	public static String POSTGRES_USER = "applaudo";
-	public static String POSTGRES_PASS = "applaudo";
+	public String POSTGRES_DBNAME;
+	public String POSTGRES_ADDR;
+	public String POSTGRES_USER;
+	public String POSTGRES_PASS;
 
 	@Bean
 	public MethodValidationPostProcessor methodValidationPostProcessor() {
@@ -60,6 +66,11 @@ public class JpaConfiguration {
 	// Aplicacion de los ajustes de conexion a la base de datos.
 	@Bean
 	public DataSource dataSource() {
+		POSTGRES_DBNAME = config.getDbName();
+		POSTGRES_ADDR = config.getServerAddress() + POSTGRES_DBNAME;
+		POSTGRES_USER = config.getDbUser();
+		POSTGRES_PASS = config.getDbPassword();
+
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
 		dataSource.setDriverClassName("org.postgresql.Driver");
 		dataSource.setUrl(POSTGRES_ADDR);

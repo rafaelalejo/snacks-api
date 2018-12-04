@@ -44,7 +44,6 @@ public class RestExceptionAdvice {
 
 	// Constraint violation errors
 	@ExceptionHandler(value = ConstraintViolationException.class)
-
 	public ErrorResponse constraintViolationHandler(HttpServletRequest request, HttpServletResponse response,
 			ConstraintViolationException exception) {
 
@@ -70,7 +69,6 @@ public class RestExceptionAdvice {
 
 	// Constraint violation errors
 	@ExceptionHandler(value = SQLException.class)
-
 	public ErrorResponse databaseExceptionHandler(HttpServletRequest request, HttpServletResponse response,
 			SQLException exception) {
 

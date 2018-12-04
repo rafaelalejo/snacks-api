@@ -9,10 +9,12 @@ import javax.validation.constraints.Min;
 
 import com.applaudo.snacks.api.domain.Product;
 import com.applaudo.snacks.api.domain.Token;
+import com.applaudo.snacks.api.response.PaginatedProductsResponse;
 import com.applaudo.snacks.api.service.ProductService;
 import com.applaudo.snacks.api.service.TokenService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,10 +35,40 @@ public class ProductController {
 
 	// Product search
 
-	// TODO: pagination.
 	@GetMapping("/products")
 	public List<Product> getAllProducts() {
 		return productService.getAllProducts();
+	}
+
+	// Pageable responses
+	@GetMapping("/products/page")
+	public PaginatedProductsResponse getAllProductsByPage(@RequestParam(name = "page") Integer page,
+			@RequestParam(name = "size") Integer size) {
+		return new PaginatedProductsResponse(productService.getAllProducts(page, size));
+	}
+
+	@GetMapping("/products/page/sorted/name")
+	public PaginatedProductsResponse getAllProductsPaginatedSortedByNameAsc(
+			@Min(1) @RequestParam(name = "page") Integer page, @Min(1) @RequestParam(name = "size") Integer size) {
+		return new PaginatedProductsResponse(productService.getAllProductsSorted(page, size, Direction.ASC, "name"));
+	}
+
+	@GetMapping("/products/page/sorted/likes")
+	public PaginatedProductsResponse getAllProductsPaginatedSortedByLikesAsc(
+			@Min(1) @RequestParam(name = "page") Integer page, @Min(1) @RequestParam(name = "size") Integer size) {
+		return new PaginatedProductsResponse(productService.getAllProductsSorted(page, size, Direction.ASC, "likes"));
+	}
+
+	@GetMapping("/products/page/sorted/name/desc")
+	public PaginatedProductsResponse getAllProductsPaginatedSortedByNameDesc(
+			@Min(1) @RequestParam(name = "page") Integer page, @Min(1) @RequestParam(name = "size") Integer size) {
+		return new PaginatedProductsResponse(productService.getAllProductsSorted(page, size, Direction.DESC, "name"));
+	}
+
+	@GetMapping("/products/page/sorted/likes/desc")
+	public PaginatedProductsResponse getAllProductsPaginatedSortedByLikesDesc(
+			@Min(1) @RequestParam(name = "page") Integer page, @Min(1) @RequestParam(name = "size") Integer size) {
+		return new PaginatedProductsResponse(productService.getAllProductsSorted(page, size, Direction.DESC, "likes"));
 	}
 
 	@GetMapping("/products/{id}")

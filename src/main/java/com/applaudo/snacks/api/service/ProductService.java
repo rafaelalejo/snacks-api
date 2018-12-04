@@ -6,6 +6,10 @@ import java.util.List;
 import com.applaudo.snacks.api.domain.Product;
 import com.applaudo.snacks.api.domain.Token;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
+
 public interface ProductService {
 
 	public Product addProduct(Token token, Product product);
@@ -19,6 +23,10 @@ public interface ProductService {
 	public Product findById(Integer id);
 
 	public List<Product> findByName(String name);
+
+	public Page<Product> getAllProducts(Integer page, Integer size);
+
+	public Page<Product> getAllProductsSorted(Integer page, Integer size, Direction direction, String field);
 
 	public List<Product> getAllProducts();
 

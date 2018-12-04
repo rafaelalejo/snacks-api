@@ -18,6 +18,10 @@ import com.applaudo.snacks.api.repository.LikeRepository;
 import com.applaudo.snacks.api.repository.ProductRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -110,9 +114,25 @@ public class ProductServiceImpl implements ProductService {
 		return p;
 	}
 
+	// Products query
 	@Override
 	public List<Product> getAllProducts() {
 		return productRepository.findAll();
+	}
+
+	@Override
+	public Page<Product> getAllProducts(Integer page, Integer size) {
+		PageRequest request = PageRequest.of(page - 1, size, Sort.Direction.ASC, "id");
+
+		return productRepository.findAll(request);
+	}
+
+	@Override
+	public Page<Product> getAllProductsSorted(Integer page, Integer size, Direction direction, String field) {
+		PageRequest request = PageRequest.of(page - 1, size, direction, field);
+
+		return productRepository.findAll(request);
+
 	}
 
 	@Transactional
@@ -125,6 +145,7 @@ public class ProductServiceImpl implements ProductService {
 		}
 
 		Product p = findById(id);
+
 		// a user account can only make one like per product
 		Like l = likeRepository.findByAccountAndProduct(token.getAccount(), p);
 
