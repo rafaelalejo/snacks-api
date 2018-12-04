@@ -1,4 +1,4 @@
-serverAddress: jdbc:postgresql://192.168.70.130/
+serverAddress: jdbc:postgresql://localhost/
 dbName: snacks_applaudo
 dbUser: applaudo
 dbPassword: applaudo
