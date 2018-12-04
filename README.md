@@ -65,6 +65,35 @@ Then you're ready to run or recompile the project!
 
 Get the token for a given user. Note: for security, the credentials must be included
 in the request headers.
+
+#### Rest usernames
+```yaml
+# Admins
+
+username: mjovel
+password: mjovel
+
+username: root
+password: toor
+
+# Clients
+
+username: rafa1337
+password: rafa1337
+
+username: c1
+passwored: test
+
+username: c2
+passwored: test
+
+username: c3
+passwored: test
+
+username: c4
+passwored: test
+
+```
 #### Request (GET)
 ```
 http://www.mapacheproject.xyz:8080/login
