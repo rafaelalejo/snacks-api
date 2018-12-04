@@ -1,0 +1,765 @@
+{
+	"info": {
+		"_postman_id": "76850b92-784f-45a7-9100-ac5d13a7bf56",
+		"name": "applaudo-snacks-api-test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "account-details",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"type": "text",
+						"value": "f89d220b-e5d6-42f6-84c8-9906a0063364"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://www.mapacheproject.xyz:8080/account",
+					"protocol": "http",
+					"host": [
+						"www",
+						"mapacheproject",
+						"xyz"
+					],
+					"port": "8080",
+					"path": [
+						"account"
+					]
+				},
+				"description": "Checks the account assigned to a token."
+			},
+			"response": [
+				{
+					"name": "login-admin",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "username",
+								"value": "test",
+								"type": "text"
+							},
+							{
+								"key": "password",
+								"value": "test",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:8080/login",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"login"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json;charset=UTF-8"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 02 Dec 2018 02:59:41 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"token\": \"8153263d-cfa7-4e9d-bfd2-dfe17c5c786b\"\n}"
+				}
+			]
+		},
+		{
+			"name": "login-admin",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "username",
+						"value": "mjovel",
+						"type": "text"
+					},
+					{
+						"key": "password",
+						"value": "mjovel",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://www.mapacheproject.xyz:8080/login",
+					"protocol": "http",
+					"host": [
+						"www",
+						"mapacheproject",
+						"xyz"
+					],
+					"port": "8080",
+					"path": [
+						"login"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "mjovel",
+							"disabled": true
+						},
+						{
+							"key": "password",
+							"value": "mjovel",
+							"disabled": true
+						}
+					]
+				},
+				"description": "Retrieves a token with administrator privileges."
+			},
+			"response": [
+				{
+					"name": "login-admin",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "username",
+								"value": "test",
+								"type": "text"
+							},
+							{
+								"key": "password",
+								"value": "test",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:8080/login",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"login"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json;charset=UTF-8"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 02 Dec 2018 02:59:41 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"token\": \"8153263d-cfa7-4e9d-bfd2-dfe17c5c786b\"\n}"
+				}
+			]
+		},
+		{
+			"name": "login-client",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "username",
+						"type": "text",
+						"value": "rafa1337"
+					},
+					{
+						"key": "password",
+						"type": "text",
+						"value": "rafa1337"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://www.mapacheproject.xyz:8080/login",
+					"protocol": "http",
+					"host": [
+						"www",
+						"mapacheproject",
+						"xyz"
+					],
+					"port": "8080",
+					"path": [
+						"login"
+					]
+				},
+				"description": "Retrieves a client token."
+			},
+			"response": []
+		},
+		{
+			"name": "logout",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"type": "text",
+						"value": "f89d220b-e5d6-42f6-84c8-9906a0063364"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://www.mapacheproject.xyz:8080/logout",
+					"protocol": "http",
+					"host": [
+						"www",
+						"mapacheproject",
+						"xyz"
+					],
+					"port": "8080",
+					"path": [
+						"logout"
+					]
+				},
+				"description": "Retrieves a client token."
+			},
+			"response": []
+		},
+		{
+			"name": "products-all",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://www.mapacheproject.xyz:8080/products",
+					"protocol": "http",
+					"host": [
+						"www",
+						"mapacheproject",
+						"xyz"
+					],
+					"port": "8080",
+					"path": [
+						"products"
+					]
+				},
+				"description": "Retrieves all store products."
+			},
+			"response": []
+		},
+		{
+			"name": "products-all-page",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://www.mapacheproject.xyz:8080/products/page/?page=1&size=3",
+					"protocol": "http",
+					"host": [
+						"www",
+						"mapacheproject",
+						"xyz"
+					],
+					"port": "8080",
+					"path": [
+						"products",
+						"page",
+						""
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "size",
+							"value": "3"
+						}
+					]
+				},
+				"description": "Retrieves all store products, paginated."
+			},
+			"response": []
+		},
+		{
+			"name": "products-all-page-sorted-name",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://www.mapacheproject.xyz:8080/products/page/sorted/name?page=1&size=3",
+					"protocol": "http",
+					"host": [
+						"www",
+						"mapacheproject",
+						"xyz"
+					],
+					"port": "8080",
+					"path": [
+						"products",
+						"page",
+						"sorted",
+						"name"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "size",
+							"value": "3"
+						}
+					]
+				},
+				"description": "Retrieves all store products, paginated and sorted by name in ascending order."
+			},
+			"response": []
+		},
+		{
+			"name": "products-all-page-sorted-likes",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://www.mapacheproject.xyz:8080/products/page/sorted/likes?page=1&size=3",
+					"protocol": "http",
+					"host": [
+						"www",
+						"mapacheproject",
+						"xyz"
+					],
+					"port": "8080",
+					"path": [
+						"products",
+						"page",
+						"sorted",
+						"likes"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "size",
+							"value": "3"
+						}
+					]
+				},
+				"description": "Retrieves all store products, paginated and sorted by likes in ascending order."
+			},
+			"response": []
+		},
+		{
+			"name": "products-all-page-sorted-name-desc",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://www.mapacheproject.xyz:8080/products/page/sorted/name/desc?page=1&size=3",
+					"protocol": "http",
+					"host": [
+						"www",
+						"mapacheproject",
+						"xyz"
+					],
+					"port": "8080",
+					"path": [
+						"products",
+						"page",
+						"sorted",
+						"name",
+						"desc"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "size",
+							"value": "3"
+						}
+					]
+				},
+				"description": "Retrieves all store products, paginated and sorted by name in descending order."
+			},
+			"response": []
+		},
+		{
+			"name": "products-all-page-sorted-likes-desc",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://www.mapacheproject.xyz:8080/products/page/sorted/likes/desc?page=1&size=3",
+					"protocol": "http",
+					"host": [
+						"www",
+						"mapacheproject",
+						"xyz"
+					],
+					"port": "8080",
+					"path": [
+						"products",
+						"page",
+						"sorted",
+						"likes",
+						"desc"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "size",
+							"value": "3"
+						}
+					]
+				},
+				"description": "Retrieves all store products, paginated and sorted by likes in descending order."
+			},
+			"response": []
+		},
+		{
+			"name": "products-by-id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://www.mapacheproject.xyz:8080/products/1",
+					"protocol": "http",
+					"host": [
+						"www",
+						"mapacheproject",
+						"xyz"
+					],
+					"port": "8080",
+					"path": [
+						"products",
+						"1"
+					]
+				},
+				"description": "Retrieves a product by its id."
+			},
+			"response": []
+		},
+		{
+			"name": "products-seach",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://www.mapacheproject.xyz:8080/products/search?name=diana",
+					"protocol": "http",
+					"host": [
+						"www",
+						"mapacheproject",
+						"xyz"
+					],
+					"port": "8080",
+					"path": [
+						"products",
+						"search"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "diana"
+						}
+					]
+				},
+				"description": "Retrieves a list of products whose name containts the search string."
+			},
+			"response": []
+		},
+		{
+			"name": "products-update-price",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "token",
+						"value": "696b3458-3038-4e28-a70b-57708ab04176",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://www.mapacheproject.xyz:8080/products/1/price?price=1.2",
+					"protocol": "http",
+					"host": [
+						"www",
+						"mapacheproject",
+						"xyz"
+					],
+					"port": "8080",
+					"path": [
+						"products",
+						"1",
+						"price"
+					],
+					"query": [
+						{
+							"key": "price",
+							"value": "1.2"
+						}
+					]
+				},
+				"description": "Update a product price by its id."
+			},
+			"response": []
+		},
+		{
+			"name": "products-new",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"type": "text",
+						"value": "471b55c5-2fdc-488b-b81d-ea2d9ef7f968"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"atol chuco\",\n    \"price\": 0.50,\n    \"stock\": 10\n}"
+				},
+				"url": {
+					"raw": "http://www.mapacheproject.xyz:8080/products",
+					"protocol": "http",
+					"host": [
+						"www",
+						"mapacheproject",
+						"xyz"
+					],
+					"port": "8080",
+					"path": [
+						"products"
+					]
+				},
+				"description": "created a new product"
+			},
+			"response": []
+		},
+		{
+			"name": "products-like-client",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"type": "text",
+						"value": "3b7654c3-7c64-4c80-b9ed-ac9006089d50"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://www.mapacheproject.xyz:8080/products/1/like",
+					"protocol": "http",
+					"host": [
+						"www",
+						"mapacheproject",
+						"xyz"
+					],
+					"port": "8080",
+					"path": [
+						"products",
+						"1",
+						"like"
+					]
+				},
+				"description": "Likes a product."
+			},
+			"response": []
+		},
+		{
+			"name": "products-purchase-client",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"type": "text",
+						"value": "3b7654c3-7c64-4c80-b9ed-ac9006089d50"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://www.mapacheproject.xyz:8080/products/1/purchase?quantity=1",
+					"protocol": "http",
+					"host": [
+						"www",
+						"mapacheproject",
+						"xyz"
+					],
+					"port": "8080",
+					"path": [
+						"products",
+						"1",
+						"purchase"
+					],
+					"query": [
+						{
+							"key": "quantity",
+							"value": "1"
+						}
+					]
+				},
+				"description": "Tries to product properties with a client token."
+			},
+			"response": []
+		},
+		{
+			"name": "products-purchase-logs",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"type": "text",
+						"value": "471b55c5-2fdc-488b-b81d-ea2d9ef7f968"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://www.mapacheproject.xyz:8080/products/purchase/logs",
+					"protocol": "http",
+					"host": [
+						"www",
+						"mapacheproject",
+						"xyz"
+					],
+					"port": "8080",
+					"path": [
+						"products",
+						"purchase",
+						"logs"
+					]
+				},
+				"description": "Tries to product properties with a client token."
+			},
+			"response": []
+		},
+		{
+			"name": "products-price-logs",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"type": "text",
+						"value": "471b55c5-2fdc-488b-b81d-ea2d9ef7f968"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://www.mapacheproject.xyz:8080/products/price/logs",
+					"protocol": "http",
+					"host": [
+						"www",
+						"mapacheproject",
+						"xyz"
+					],
+					"port": "8080",
+					"path": [
+						"products",
+						"price",
+						"logs"
+					]
+				},
+				"description": "Tries to product properties with a client token."
+			},
+			"response": []
+		}
+	]
+}

@@ -1,6 +1,66 @@
 # snacks-api
 
+## Installation guide
+
+### GNU/Linux & Windows
+#### Requirements:
+* Apache Maven
+* JDK >= 8
+
+#### Instructions:
+```bash
+git clone https://github.com/rafaelalejo/snacks-api
+cd snacks-api
+
+# run the Spring Boot application in localhost:8080
+mvn spring-boot:run
+
+# Compiles the Spring Boot application to a .war file
+# for use in a Jave EE server (like Apache tomcat)
+# check the newly created target folder after running the commanda
+mvn install
+```
+
+#### Note
+* Apache Tomcat Server version >= 8.5 is supported.
+* If your server configuration assigns a prefix to the snacks application, you
+need to add the said prefix to all the request, for example, if the application prefix is set to `demo`,
+
+```
+http://www.mapacheproject.xyz:8080/demo/products
+```
+
+#### Setting up a new  database connection
+The default `application.yml` configuration sets the connection to my own database, hosted
+in a LeaseWeb VPS.
+If you want to use your own database, restore the Postgresql 9.5 script `snacks.sql` with your prefered administration tool, like pgAdmin.
+
+In a GNU/Linux system,  you can run the following command
+
+```bash
+sudo -u postgres psql < snacks.sql
+```
+Note: the above command restores the database and sets the privileges for the
+default postgresql administrator account: `postgres`.
+
+Now you need to edit the `src/main/application.yml` file to match your
+database configuration.
+
+```yaml
+serverAddress: jdbc:postgresql://<HOST>[:PORT]/
+dbName: snacks_applaudo
+dbUser: <USERNAME>
+dbPassword: <PASSWORD>
+```
+You can leave the ``PORT`` field empty if you're using the default `5432` port configuration.
+
+Then you're ready to run or recompile the project!
+
+
 ## API examples
+
+**Also check the Postman collection in the releases tab.**
+
 ### Login
 
 Get the token for a given user. Note: for security, the credentials must be included
@@ -255,4 +315,85 @@ Thee updated product descriptor. stock reduced.
     "stock": 71,
     "likes": 1
 }
+```
+
+## Admin functionality
+
+### Get purchase logs
+#### Request (GET)
+You must include the admin ``token`` field in the request headers.
+```
+http://www.mapacheproject.xyz:8080/products/purchase/logs
+```
+
+#### Response
+```json
+[
+    {
+        "id": 2,
+        "account": {
+            "id": 2,
+            "username": "rafa1337",
+            "adminRole": false
+        },
+        "product": {
+            "id": 11,
+            "name": "atol de elote",
+            "price": 0.5,
+            "stock": 8,
+            "likes": 1
+        },
+        "quantity": 2,
+        "timestamp": "2018-12-04T06:00:00.000+0000"
+    }
+]
+```
+
+### Get product update logs
+#### Request (GET)
+You must include the admin ``token`` field in the request headers.
+```
+http://www.mapacheproject.xyz:8080/products/price/logs
+```
+
+#### Response
+```json
+[
+    {
+        "id": 1,
+        "account": {
+            "id": 1,
+            "username": "mjovel",
+            "adminRole": true
+        },
+        "product": {
+            "id": 1,
+            "name": "snack applaudo",
+            "price": 1.3,
+            "stock": 98,
+            "likes": 1
+        },
+        "oldPrice": 100.1,
+        "newPrice": 1.3,
+        "timestamp": "2018-12-04T16:05:14.847+0000"
+    },
+    {
+        "id": 3,
+        "account": {
+            "id": 1,
+            "username": "mjovel",
+            "adminRole": true
+        },
+        "product": {
+            "id": 1,
+            "name": "snack applaudo",
+            "price": 1.3,
+            "stock": 98,
+            "likes": 1
+        },
+        "oldPrice": 1.3,
+        "newPrice": 1.3,
+        "timestamp": "2018-12-04T16:08:27.547+0000"
+    }
+]
 ```
