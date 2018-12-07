@@ -67,6 +67,8 @@
     </dependency>
   </dependencies>
   <build>
+	<!-- .war file final name -->
+  	<finalName>dev</finalName>
     <plugins>
       <plugin>
         <groupId>org.springframework.boot</groupId>
