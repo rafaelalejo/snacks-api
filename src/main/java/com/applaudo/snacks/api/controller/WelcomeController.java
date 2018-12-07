@@ -9,6 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class WelcomeController {
 	@GetMapping("/")
 	public CustomMessageResponse hello() {
-		return new CustomMessageResponse("Hola Applaudo!");
+		return new CustomMessageResponse("Hola Applaudo?");
 	}
 }
