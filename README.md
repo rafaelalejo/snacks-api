@@ -1,4 +1,5 @@
 # snacks-api
+[![Build Status](https://dev.azure.com/rafaelperez0763/ralejo-snacks-api/_apis/build/status/Snacks%20API%20CI%20-%20DEV?branchName=development)](https://dev.azure.com/rafaelperez0763/ralejo-snacks-api/_build/latest?definitionId=3?branchName=development)
 
 ## Installation guide
 
