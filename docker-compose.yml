@@ -1,7 +1,7 @@
 version: '3'
 services:
   snacks-db:
-    image: 'applaudo/snacks-db'
+    build: db/.
   snacks-api:
     build: .
     ports:
