@@ -8,64 +8,19 @@ import org.springframework.context.annotation.Configuration;
 @EnableConfigurationProperties
 @ConfigurationProperties
 public class YAMLConfig {
-	private String serverAddress;
-	private String dbName;
-	private String dbUser;
-	private String dbPassword;
+	private String dbConnectionString;
 
 	/**
-	 * @return the serverAddress
+	 * @return the dbConnectionString
 	 */
-	public String getServerAddress() {
-		return serverAddress;
+	public String getDbConnectionString() {
+		return dbConnectionString;
 	}
 
 	/**
-	 * @return the dbName
+	 * @param dbConnectionString the dbConnectionString to set
 	 */
-	public String getDbName() {
-		return dbName;
-	}
-
-	/**
-	 * @return the dbUser
-	 */
-	public String getDbUser() {
-		return dbUser;
-	}
-
-	/**
-	 * @return the dbPassword
-	 */
-	public String getDbPassword() {
-		return dbPassword;
-	}
-
-	/**
-	 * @param serverAddress the serverAddress to set
-	 */
-	public void setServerAddress(String serverAddress) {
-		this.serverAddress = serverAddress;
-	}
-
-	/**
-	 * @param dbName the dbName to set
-	 */
-	public void setDbName(String dbName) {
-		this.dbName = dbName;
-	}
-
-	/**
-	 * @param dbPassword the dbPassword to set
-	 */
-	public void setDbPassword(String dbPassword) {
-		this.dbPassword = dbPassword;
-	}
-
-	/**
-	 * @param dbUser the dbUser to set
-	 */
-	public void setDbUser(String dbUser) {
-		this.dbUser = dbUser;
+	public void setDbConnectionString(String dbConnectionString) {
+		this.dbConnectionString = dbConnectionString;
 	}
 }
